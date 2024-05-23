@@ -1,0 +1,64 @@
+{% extends "form/nav.html" %}
+{% block title %}หัวข้อแม่แบบประเมิน{% endblock %}
+{% block content %}
+    
+<body>
+    <p class="flex items-center text-white text-2xl ml-5 px-4 py-4 ">หัวข้อแบบประเมินการทวนสอบผลสัมฤทธิ์ (O,PLO)  </p>
+    <div class="relative rounded-lg bg-gray-300 p-8 shadow-xl px-16 ">
+      <div class="rounded-md pb-5 bg-white ">
+        <div class=" bg-white my-0 text-black bottom-5 p-5 shadow-inner text-2xl border-2 ">
+          <h1>จัดการ/เลือกหัวข้อประเมินการสอน (O,PLO) สาขา{{user_profile.department}}</h1></div>
+
+
+<div class="main-container">
+  
+
+
+  <div class="form-list">
+      <div class="flex flex-wrap">
+      {% for data in form%}
+      <div class="w-full md:w-2/3  px-2 my-3 pl-16 justify-center">
+          <div class="bg-gray-100 border rounded shadow-lg p-4 mx-4">
+      <div class="form-card">
+          
+        <input
+        id="toggle_{{ forloop.counter }}"
+        class="toggle-checkbox"
+        type="checkbox"
+        onclick="set_active({{data.id}},event)"
+        {% if data.is_active %} checked {% endif %}
+    />
+          <label
+              for="toggle_{{ forloop.counter }}"
+              class="toggle-label block overflow-hidden h-8 rounded-full bg-gray-300 cursor-pointer w-14"
+          ></label>
+      </div>
+      <div>Create by: <a class="bg-purple-500 text-white w-auto p-1">{{ data.created_by }}</a> </div>
+      <div>tamplate ถูกใช้งาน: {{data.is_active}}</div>
+      <div> Form ID: {{ data.id }}</div>
+      {{ data.semester }}/{{ data.year_number }}
+              <a href="{% url 'edit_template' form_id=data.id %}">
+                  <div>
+                  <button onclick="viewForm({{data.id}}) " class="font-semibold text-white bg-green-600 hover:bg-green-900 ml-2 p-1 mt-3">จัดการแบบฟอร์ม {{data.semester}}/{{data.year_number}} </button>
+              </div>
+              </a>
+          
+      </div>
+  </div>
+  {% endfor %}
+  
+</div>
+<div class="flex justify-between">
+    {% comment %} <div></div> {% endcomment %}
+    <a href="create_plo">
+        <button class="border rounded shadow-lg font-semibold bg-green-600 hover:bg-green-900 text-white p-3 mt-5 mx-4">Create Template!</button>
+    </a>
+</div>
+      
+     
+  </div>
+  
+</div>
+
+
+{% endblock %}

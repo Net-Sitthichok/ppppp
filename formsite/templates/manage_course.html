@@ -1,0 +1,182 @@
+ <style>
+     
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }  
+    .edit-btn,.delete-btn {
+        padding: 5px 10px;
+        margin-right: 5px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+    
+    .edit-btn {
+        background-color: #3b82f6;
+    }
+
+    .edit-btn:hover{
+        background-color: #1d4ed8;
+    }
+    
+    .delete-btn {
+        background-color: #ef4444;
+    }
+    .delete-btn:hover {
+        background-color: #b91c1c;
+    }
+    .remove-btn {
+        background-color: #ff4c4c;
+    }
+    
+    .remove-btn:hover {
+        opacity: 0.8;
+    } 
+    
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    } 
+</style> 
+
+{% extends "form/nav_course.html" %}
+{% block title %}จัดการข้อมูลรายวิชา{% endblock %}
+  
+    {% block content %}
+
+   
+    <p class="flex items-center text-white text-2xl ml-5 px-4 py-4 ">จัดการข้อมูลรายวิชา</p>
+    <div class="relative rounded-lg bg-gray-300 p-8 shadow-xl px-16 ">
+      <div class="rounded-md pb-5 bg-white ">
+        <div class=" bg-white my-0 text-black bottom-5 p-5 shadow-inner text-2xl border-2 ">
+            <h1>รายวิชา สาขา{{templates.department}} ภาคเรียนที่{{templates.semester}}/{{templates.year_number}}</h1></div>
+
+    
+
+    <div class="main-container">
+        
+        <div class="form-list" id="form-list">
+            <div class="-my-2 overflow-x-auto sm:-mx lg:-mx-4">
+                
+                <div class="py-2 align-middle inline-block min-w-full sm:px-5 lg:px-5">
+                    
+                    <div class="flex justify-between px-5 py-1">
+                        <!-- search bar -->
+                        <div class="flex">
+                          <div class="items-center max-w-sm mx-auto">
+                            <label for="simple-search" class="sr-only">Search</label>
+                            <div class="flex ">
+                              <input type="text" id="simple-search"
+                                class="bg-gray-100 border border-gray-300 text-black text-sm  focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+                                placeholder="ค้นหาข้อมูลรายวิชา"  /></div>
+                            </div>
+                        </div>
+                       
+                    <div><button type="button" id="addCourseBtn" class="bg-blue-500 hover:bg-blue-700 p-3 py-3 text-white text-xl border mx-5 my-1 rounded-2xl ">+ เพิ่มรายวิชา</button></div>
+                </div>
+                <div class=" shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">    
+                    <div class="px-6 ">
+                       
+        <table class="table-auto max-w-full w-full divide-y divide-gray-200 ">
+            <thead class="bg-gray-50 ">
+                <tr>
+                    <th class="pl-6 py-3 text-xl font-mono text-gray-500 uppercase tracking-wider">รหัสวิชา</th>
+                    <th class="pl-6 py-3 text-xl font-mono text-gray-500 uppercase tracking-wider">ชื่อวิชา</th>
+                    <th class="pl-6 py-3 text-xl font-mono text-gray-500 uppercase tracking-wider">ตอนเรียนที่มี</th>
+                    <th class="pl-6 py-3 text-xl font-mono text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y bg-gray-100 text-xl">
+                {% for data in courses %}
+                <tr>
+                    <td class="pl-6 py-3 whitespace-nowrap text-center">{{data.class_code}}</td>
+                    <td class="pl-6 py-3 whitespace-nowrap text-center">{{data.name}}</td>
+                     
+                    <td class="pl-6 py-3 whitespace-nowrap text-center">  {% for section in data.sections.all %} ตอนที่ {{section.session_number}} {% endfor %}</td>
+                    
+                    <td class="pl-6 py-3 whitespace-nowrap text-center">
+                        <div class=" ">
+                        <button onclick="openModal('editModal', '{{ data.class_code }}', '{{data.name|safe}}', '{{data.class_code}} {{data.name}} ตอนเรียนที่มีได้แก่ 
+                        {% for section in data.sections.all %}
+                            {{section.session_number}}, 
+                        {% endfor %}')" class="edit-btn">Edit</button>
+                        <button type="button" onclick="delete_c({{data.id}})" class="delete-btn">Delete</button></div>
+                    </td>
+                </tr>
+                {% endfor %}
+               
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+            {% comment %} {% for data in courses %}
+            <div class="form-card">
+                <label>
+                    {{data.class_code}} {{data.name}} ตอนเรียนที่มีได้แก่ 
+                    {% for section in data.sections.all %}
+                        {{section.session_number}}, 
+                    {% endfor %}
+                        <button type="button" onclick="delete_c({{data.id}})">ลบรายวิชา {{data.class_code}} {{data.name}}</button>
+                </label>
+            </div>
+            {% endfor %} {% endcomment %}
+
+            
+        </div>
+    </div>
+</div>
+</div>
+    <!-- Modal -->
+    <div id="addCourseModal" class="modal">
+        <div class="max-w-full w-full  h-0 shadow-xl flex justify-center inset-0 mt-10  ">
+        <div class="w-2/3 h-96 ">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="border m-0.1 p-3">
+            
+            <form id="addCourseForm">
+                <label class="pl-5">
+                    <h1 class=" text-xl">รหัสวิชา: </h1><input type="text" id="class_code" class="text-xl border border-gray-300 p-1 rounded" required><br><br>
+                    <h1 class=" text-xl">ชื่อวิชา: </h1><input type="text" id="name" class="text-xl border border-gray-300 p-1 rounded" required><br><br>
+                    <h1 class=" text-xl">จำนวนตอนเรียน: </h1><input type="number" id="sections" class="text-xl border border-gray-300 p-1 rounded" required><br><br>
+                </label>
+                <button type="button" id="saveCourseBtn" class="text-xl bg-green-500 hover:bg-green-700 text-white font-semibold p-3 px-8 rounded-full">บันทึก</button>
+            </form>
+        </div>
+        </div>
+        </div>
+        </div>
+    </div>
+
+    {% endblock %}
+ 
+   

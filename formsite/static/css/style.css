@@ -1,0 +1,87 @@
+.clickable {
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="submit"] {
+  width: 70%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Makes sure padding does not affect width */
+}
+
+#button_child_edit {
+  background-color: rgb(59,130,246); /* กำหนดสีพื้นหลังของปุ่ม Edit */
+  border: none;
+  color: white; /* กำหนดสีของตัวอักษรในปุ่ม Edit */
+  padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px; /* ทำให้ปุ่มมีเส้นโค้ง */
+}
+
+#button_child_delete {
+  background-color: #f44336; /* กำหนดสีพื้นหลังของปุ่ม Delete */
+  border: none;
+  color: white; /* กำหนดสีของตัวอักษรในปุ่ม Delete */
+  padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px; /* ทำให้ปุ่มมีเส้นโค้ง */
+}
+#button_edit:hover,
+#button_child_edit:hover,
+#button_add:hover,
+#button_add_sub:hover{
+  background-color: rgb(29,78,216); 
+}
+#button_child_delete:hover{
+  background-color: rgb(185,28,28); 
+  
+}
+#button_add{
+  background-color: rgb(59,130,246); /* กำหนดสีพื้นหลังของปุ่ม Edit */
+  border: none;
+  color: white; /* กำหนดสีของตัวอักษรในปุ่ม Edit */
+  padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+#button_add_sub{
+  background-color: rgb(59,130,246); /* กำหนดสีพื้นหลังของปุ่ม Edit */
+  border: none;
+  color: white; /* กำหนดสีของตัวอักษรในปุ่ม Edit */
+  padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+#button_edit {
+  background-color: rgb(59,130,246); /* กำหนดสีพื้นหลังของปุ่ม Edit */
+  border: none;
+  color: white; /* กำหนดสีของตัวอักษรในปุ่ม Edit */
+  padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px; /* ทำให้ปุ่มมีเส้นโค้ง */
+}

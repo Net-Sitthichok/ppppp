@@ -1,0 +1,347 @@
+<style>
+  /* CSS สำหรับ tag ul, li, และ a */
+  ul {
+    list-style-type: none; /* เอา bullet point ออก */
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 10px; /* เว้นระยะห่างระหว่างรายการ */
+  }
+
+  a {
+    text-decoration: none; /* เอา underline ออก */
+    color: #007bff; /* เปลี่ยนสีข้อความลิงก์ */
+    transition: color 0.3s ease; /* เพิ่ม transition เมื่อ hover */
+  }
+
+  a:hover {
+    color: #0056b3; /* เปลี่ยนสีข้อความลิงก์เมื่อ hover */
+  }
+
+  /* CSS สำหรับปุ่มแก้ไข */
+  .edit-button,
+  .delete-button {
+    background-color: #007bff; /* สีพื้นหลังปุ่ม */
+    color: #fff; /* สีข้อความ */
+    border: none; /* เอาเส้นขอบออก */
+    border-radius: 5px; /* เพิ่มมุมขอบ */
+    padding: 5px 10px; /* ขนาดของปุ่ม */
+    cursor: pointer; /* เปลี่ยน pointer เมื่อ hover */
+    transition: background-color 0.3s ease; /* เพิ่ม transition เมื่อ hover */
+    margin-right: 5px; /* เพิ่มระยะห่างขวาของปุ่ม */
+  }
+
+  .edit-button:hover,
+  .delete-button:hover {
+    background-color: #0056b3; /* เปลี่ยนสีพื้นหลังปุ่มเมื่อ hover */
+  }
+
+  .custom-list {
+    list-style-type: none; /* เอาเครื่องหมายขีด ๆ ออก */
+    padding: 0;
+  }
+
+  .custom-list li {
+    padding: 5px 0; /* ปรับการเว้นระยะห่างของรายการ */
+    border-bottom: 1px solid #ccc; /* เพิ่มเส้นขอบด้านล่างของแต่ละรายการ */
+  }
+
+  .custom-list li:last-child {
+    border-bottom: none; /* ลบเส้นขอบสุดท้ายของรายการ */
+  }
+</style>
+
+<button onclick="toggleSections()">เปลี่ยน</button>
+
+<body>
+  <div id="upload-csv-section" >
+    <h2>Upload CSV File</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="csv_file" id="csv_file" />
+      <button type="submit" name="import" id="import">Submit</button>
+    </form>
+    <div id="progress-bar-container">
+      <h2>Progress</h2>
+      <div id="progress-bar" style="width: 2.5%"></div>
+    </div>
+  </div>
+
+  <ul id="clo-section" style="display: none">
+    {% for clo in clo_form %}
+    <li>
+      ID: {{ clo.id }} {{ clo.text }}
+      <a
+        href="#"
+        onclick="toggleEditForm('editForm_clo_{{ clo.id }}')"
+        class="edit-button"
+        >Edit CLO</a
+      >
+      <a
+        href="#"
+        onclick="toggleDeleteForm('deleteForm_clo_{{ clo.id }}')"
+        class="delete-button"
+        >Delete CLO</a
+      >
+      <!-- เพิ่มปุ่มลบ -->
+      <form id="editForm_clo_{{ clo.id }}" method="post" style="display: none">
+        {% csrf_token %}
+        <input type="hidden" name="clo_id" value="{{ clo.id }}" />
+        <input type="text" name="main_text" value="{{ clo.text }}" required />
+        <button type="submit" class="edit-button">Save CLO</button>
+      </form>
+      <form
+        id="deleteForm_clo_{{ clo.id }}"
+        method="post"
+        style="display: none"
+      >
+        <!-- ฟอร์มลบ -->
+        {% csrf_token %}
+        <input type="hidden" name="clo_id" value="{{ clo.id }}" />
+        <button type="submit" class="delete-button">Confirm Delete</button>
+      </form>
+      {% if clo.sub_items.all %}
+      <ul>
+        {% for sub_item in clo.sub_items.all %}
+        <li>
+          {{ forloop.parentloop.counter }}.{{ forloop.counter }} ID: {{
+          sub_item.id }} {{ sub_item.text }}
+          <a
+            href="#"
+            onclick="toggleEditForm('editForm_sub_{{ sub_item.id }}')"
+            class="edit-button"
+            >Edit Sub-item</a
+          >
+          <a
+            href="#"
+            onclick="toggleDeleteForm('deleteForm_sub_{{ sub_item.id }}')"
+            class="delete-button"
+            >Delete Sub-item</a
+          >
+          <!-- เพิ่มปุ่มลบ -->
+          <form
+            id="editForm_sub_{{ sub_item.id }}"
+            method="post"
+            style="display: none"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="sub_item_id" value="{{ sub_item.id }}" />
+            <input
+              type="text"
+              name="sub_text"
+              value="{{ sub_item.text }}"
+              required
+            />
+            <button type="submit" class="edit-button">Save Sub-item</button>
+          </form>
+          <form
+            id="deleteForm_sub_{{ sub_item.id }}"
+            method="post"
+            style="display: none"
+          >
+            <!-- ฟอร์มลบ -->
+            {% csrf_token %}
+            <input type="hidden" name="sub_item_id" value="{{ sub_item.id }}" />
+            <button type="submit" class="delete-button">Confirm Delete</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="PLO" id="PLO">
+    PLOs {% for item in assessment_template_item %}
+    <div>
+      {% if item.text %}
+        <p>ID.{{item.id}} |Normal assessment = {{ item.text }}</p>
+      {% else %}
+        <p>ID.{{ item.id}} |Template assessment = {{ item.template_select.text }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <ul id="assessment-template-section" class="assessment-template-section">
+    <div>PLO</div>
+    {% for template_item in assessment_template_item %}
+    <li>
+      ID: {{ template_item.id }} {{ template_item.text }}
+      <a
+        href="#"
+        onclick="toggleEditForm('editForm_template_{{ template_item.id }}')"
+        class="edit-button"
+        >Edit Template</a
+      >
+      <a
+        href="#"
+        onclick="toggleDeleteForm('deleteForm_template_{{ template_item.id }}')"
+        class="delete-button"
+        >Delete Template</a
+      >
+      <!-- Edit form -->
+      <form
+        id="editForm_template_{{ template_item.id }}"
+        method="post"
+        style="display: none"
+      >
+        {% csrf_token %}
+        <input
+          type="hidden"
+          name="template_id"
+          value="{{ template_item.id }}"
+        />
+        <input
+          type="text"
+          name="template_text"
+          value="{{ template_item.text }}"
+          required
+        />
+        <button type="submit" class="edit-button">Save Template</button>
+      </form>
+      <!-- Delete form -->
+      <form
+        id="deleteForm_template_{{ template_item.id }}"
+        method="post"
+        style="display: none"
+      >
+        {% csrf_token %}
+        <input
+          type="hidden"
+          name="template_id"
+          value="{{ template_item.id }}"
+        />
+        <button type="submit" class="delete-button">Confirm Delete</button>
+      </form>
+      {% if template_item.sub_items.all %}
+      <ul>
+        {% for sub_item in template_item.sub_items.all %}
+        <li>
+          {{ forloop.parentloop.counter }}.{{ forloop.counter }} ID: {{
+          sub_item.id }} {{ sub_item.text }}
+          <a
+            href="#"
+            onclick="toggleEditForm('editForm_sub_{{ sub_item.id }}')"
+            class="edit-button"
+            >Edit Sub-item</a
+          >
+          <a
+            href="#"
+            onclick="toggleDeleteForm('deleteForm_sub_{{ sub_item.id }}')"
+            class="delete-button"
+            >Delete Sub-item</a
+          >
+          <!-- Edit sub-item form -->
+          <form
+            id="editForm_sub_{{ sub_item.id }}"
+            method="post"
+            style="display: none"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="sub_item_id" value="{{ sub_item.id }}" />
+            <input
+              type="text"
+              name="sub_text"
+              value="{{ sub_item.text }}"
+              required
+            />
+            <button type="submit" class="edit-button">Save Sub-item</button>
+          </form>
+          <!-- Delete sub-item form -->
+          <form
+            id="deleteForm_sub_{{ sub_item.id }}"
+            method="post"
+            style="display: none"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="sub_item_id" value="{{ sub_item.id }}" />
+            <button type="submit" class="delete-button">Confirm Delete</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+
+<script>
+  function toggleSections() {
+    var uploadCsvSection = document.getElementById("upload-csv-section");
+    var cloSection = document.getElementById("clo-section");
+
+    if (uploadCsvSection.style.display === "none") {
+      uploadCsvSection.style.display = "block";
+      cloSection.style.display = "none";
+      uploadCsvSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      uploadCsvSection.style.display = "none";
+      cloSection.style.display = "block";
+      cloSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  function toggleEditForm(formId) {
+    var form = document.getElementById(formId);
+    if (form.style.display === "none") {
+      form.style.display = "block";
+    } else {
+      form.style.display = "none";
+    }
+  }
+
+  function toggleDeleteForm(formId) {
+    var form = document.getElementById(formId);
+    if (form.style.display === "none") {
+      form.style.display = "block";
+    } else {
+      form.style.display = "none";
+    }
+  }
+  /*
+    document.getElementById('import').onclick = function() {
+        setInterval(function() {
+            fetch('/items/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    progress: 50,  // ตัวอย่างข้อมูลที่คุณอาจต้องการส่งไปยัง API
+                    num: 100       // ตัวอย่างข้อมูลที่คุณอาจต้องการส่งไปยัง API
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // ดำเนินการอัปเดตข้อมูลหน้าเว็บของคุณด้วยข้อมูลที่คืนมาจาก API
+                console.log(data); // ตัวอย่างการแสดงค่าข้อมูลที่คืนมาในคอนโซล
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }, 1000); // ร้อยละ 1วิ
+    };
+    
+    
+    document.getElementById('import').onclick = function() {
+        setInterval(function() {
+            fetch('/progress_api/')
+            .then(response => response.json())
+            .then(data => {
+                updateProgressBar(data.progress_percent);
+                console.log(data.progress_percent);
+            });
+        }, 1000); //1วิ
+    };
+    
+    
+    function updateProgressBar(progress) {
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = `${progress}%`;
+    }
+*/
+</script>

@@ -1,0 +1,53 @@
+{% extends "evaluate/nav.html" %}
+{% block title %} แบบฟอร์มประเมิน{% endblock %}
+{% block content %}
+
+<p class="flex items-center text-white text-2xl ml-5 px-4 py-4 ">สร้างแบบประเมินการทวนสอบผลสัมฤทธิ์ </p>
+      <div class="relative rounded-lg bg-gray-300 p-8 shadow-xl px-16 ">
+        <div class="rounded-md pb-5 bg-white ">
+          <div class=" bg-white my-0 text-black bottom-5 p-5 shadow-inner text-2xl border-2 ">
+            <h1>จัดการแบบประเมินทวนสอบ : {{ request.user.first_name }}  {{request.user.last_name}}</h1>
+        </div>
+            
+
+    <div class="main-container">
+       
+        <div class="form-list">
+            <div class="flex flex-wrap ">
+            {% for data in forms%}
+            
+            <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 px-2 my-5  justify-center">
+                <div class="bg-gray-100 border rounded shadow-lg p-2 mx-2 my-2">
+            <div class="form-card">
+                <label>
+                    {%if data.is_teacher_form %}
+                    แบบฟอร์ม การทวนสอบผลสัมฤทธิ์(02) โดยอาจารย์
+                    {%else%}
+                    แบบฟอร์ม การทวนสอบผลสัมฤทธิ์(01) โดยนักศึกษา
+                    {%endif%}
+                    <div class="">
+                        Form ID : {{data.id}}
+                    <p> รหัสวิชา : {{data.course.class_code}}</p> <p>วิชา : {{data.course.name}}</p> <p>ตอนเรียนที่ : {{data.section.session_number}}</p>
+                    <div>    
+                          ภาคการศึกษา : {{data.course.teamplates.semester}}/{{data.course.teamplates.year_number}}
+                          <a href="{% url 'edit_form' form_id=data.id %}">
+                    </div>
+                        <div>
+                        <button onclick="viewForm({{data.id}})" class="bg-green-500 hover:bg-green-700 text-white text-l font-semibold p-1 my-2">จัดการแบบฟอร์ม {{data.course.class_code}} {{data.course.name}}   </button>
+                    </div>
+                    </a>
+                </div>
+                </label>
+            </div>
+
+        </div>
+    </div>
+            {% endfor %}
+        </div>
+                <button class="bg-green-500 hover:bg-green-700 hover:ring-green-700 border rounded ml-5 text-white font-semibold p-3"><a href="/evaluate/create_form">Create Form!</button>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+    {% endblock %}
