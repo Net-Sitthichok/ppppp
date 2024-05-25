@@ -1,13 +1,38 @@
+<style>
+  input[type="text"][data-type="CLO"] {
+            width: 70%; /* equivalent to w-2/3 in Tailwind */
+            border: 2px solid #D1D5DB; /* equivalent to border border-gray-300 in Tailwind */
+            height: 2rem; /* equivalent to h-8 in Tailwind */
+            margin-top: 0.5rem; /* equivalent to mt-2 in Tailwind */
+            padding-left: 0.5rem; /* equivalent to pl-2 in Tailwind */
+            background-color: #F9FAFB; /* Light background color for read-only */
+            color: #6B7280; /* Gray color for text */
+            border-radius: 0.25rem;
+        }
+
+        input[type="text"][data-type="CLO"]:hover {
+            border-color: #A0AEC0; /* Change border color on hover */
+        }
+
+        input[type="text"][data-type="CLO"]:focus {
+            border-color: black; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+
+  
+
+</style>
+
 {% extends "form/nav.html" %}
 {% block title %}แก้ไข หัวข้อแบบประเมิน (O/PLO){% endblock %}
 <style>
-  .container {
+  /* .container {
     width: 80%;
     margin: auto;
     padding: 20px;
     background-color: #f4f4f4;
     border: 1px solid #ccc;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); */
 
     .button{
 
@@ -24,7 +49,7 @@
     border-radius: 4px; /* มุมโค้งของปุ่ม */
     transition: background-color 0.3s, box-shadow 0.3s; /* เพิ่มการเปลี่ยนสีพื้นหลังและเงาเมื่อ hover */
 }
-    }
+    
 
     .button_edit_child {
     background-color: #4CAF50; /* สีพื้นฐานของปุ่ม */
@@ -271,7 +296,7 @@ setTimeout(function() {
                   <label>{{ forloop.counter }}</label>
                     <!-- แม่ -->
                     {% comment %} <label>{{ forloop.counter }}</label> {% endcomment %}
-                      <input type="text" id="parent_{{ template_data.id }}" name="parent_{{ template_data.id }}" value="{{ template_data.text }}" readonly data-type="TemplateData" placeholder="กรุณาใส่หัวข้อประเด็นหลัก" class="w-2/3 border border-gray-300 h-8 pl-2"/>
+                      <input type="text" id="parent_{{ template_data.id }}" name="parent_{{ template_data.id }}" value="{{ template_data.text }}" readonly data-type="TemplateData" placeholder="กรุณาใส่หัวข้อประเด็นหลัก" class="w-2/3 border border-gray-300 border-2 rounded h-8 pl-2"/>
                       <button type="button" id="button_child_edit" class="button_child_edit" onclick="editField('parent_{{ template_data.id }}')">Edit</button>
                       <button type="button" id="button_child_delete" class="button_child_delete" onclick="deleteField('parent_{{ template_data.id }}', 'button_parent_{{ template_data.id }}')">Delete</button>
                
@@ -285,7 +310,7 @@ setTimeout(function() {
                               
                               <label>{{ forloop.parentloop.counter }}.{{ forloop.counter }}</label>
                               
-                                <input type="text" id="clochild_{{ child.id }}" name="child_{{ child.id }}" value="{{ child.text }}" readonly  data-type="TemplateData" placeholder="กรุณาใส่หัวข้อประเด็นรอง" class="w-2/3 border h-8 border-gray-300 mt-2 pl-2"/>
+                                <input type="text" id="clochild_{{ child.id }}" name="child_{{ child.id }}" value="{{ child.text }}" readonly  data-type="TemplateData" placeholder="กรุณาใส่หัวข้อประเด็นรอง" class="w-2/3 border border-gray-300 border-2 rounded h-8 pl-2"/>
                                 <button type="button" class="button_child_edit" onclick="editField('clochild_{{ child.id }}')">Edit</button>
                                 <button type="button" class="button_child_delete" onclick="deleteField('clochild_{{ child.id }}', 'button_clochild_{{ child.id }}')">Delete</button>
                               </div>

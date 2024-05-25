@@ -87,5 +87,42 @@ document.addEventListener('DOMContentLoaded', function() {
 //         dropdown.classList.remove('hidden');
 //         }
 // });
-    
 
+
+
+
+
+
+    
+// script สำหรับ 3 ปุ่มใน action
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     // เลือกทุกปุ่ม "manage-teacher-button"
+//     const manageTeacherButtons = document.querySelectorAll('#manage-teacher-button');
+
+//     // ลูปผ่านทุกปุ่ม
+//     manageTeacherButtons.forEach(function(button) {
+//         // เพิ่ม event listener สำหรับปุ่มแต่ละปุ่ม
+//         button.addEventListener('click', function(event) {
+//             // หาตัวอ้างอิงของ dropdown ของแถวนี้
+//             const dropdown = button.nextElementSibling;
+
+//             // ทำการ toggle class 'show' เพื่อเปิดหรือปิด dropdown
+//             dropdown.classList.toggle('show');
+//         });
+//     });
+
+//     // ซ่อน dropdown เมื่อคลิกที่พื้นหลังหรือที่อื่นในหน้าจอ
+//     window.addEventListener('click', function(event) {
+//         // ตรวจสอบว่าคลิกไปที่ dropdown หรือไม่
+//         if (!event.target.matches('#manage-teacher-button')) {
+//             // หาทุก dropdowns และซ่อนทั้งหมด
+//             const dropdowns = document.querySelectorAll('.dropdown-content');
+//             dropdowns.forEach(function(dropdown) {
+//                 dropdown.classList.remove('show');
+//             });
+//         }
+//     });
+// });
+
+    
