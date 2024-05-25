@@ -1,10 +1,24 @@
-
-{% extends "evaluate/nav.html" %}
-{% block title %}สร้างแบบประเมินการทวนสอบผลสัมฤทธิ์{% endblock %}
 <style>
   .Delete-subMain:hover{
     background-color: rgb(255, 0, 0);
   }
+  input[type="text"] {
+   display: block;
+   border: 2px solid #D1D5DB; /* border-gray-300 */
+   border-radius: 0.5rem; /* rounded-lg */
+   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+   padding: 0.5rem 1rem; /* px-4 py-2 */
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* transition */
+    width: 50%;
+   margin-left: 10px;
+  }
+
+  input[type="text"]:focus {
+   outline: none; /* focus:outline-none */
+   border-color: black; /* focus:border-blue-500 */
+    /* box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); focus:ring focus:ring-blue-200 */
+  }   
+ 
 
   .popup {
     position: fixed; /* Stay in place */
@@ -23,7 +37,7 @@
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 100%; /* Could be more or less, depending on screen size */
   }
 
   .close {
@@ -55,6 +69,9 @@
   
 </style> 
 
+
+{% extends "evaluate/nav.html" %}
+{% block title %}สร้างแบบประเมินการทวนสอบผลสัมฤทธิ์{% endblock %}
 
 
 
@@ -175,6 +192,7 @@
             <div class="popup-content">
               
               <span class="close" onclick="closePopup()">&times;</span>
+              <div class="text-left">
               <div id="form_select_template">
                 <label for="template_select">เลือกแม่แบบ:</label>
                 <div id="template_list">
@@ -187,23 +205,26 @@
                               <label for="item_{{ item.id }}">&nbsp;&nbsp;{{ forloop.counter }} : {{ item.text }}</label>
                           </div>
                           {% for sub in item.sub_items.all %}
+                          <div class="px-3">
                               <div class="template_sub_item">
                                   <input type="checkbox" id="sub_{{ sub.id }}" name="template_choice" value="{{ sub.id }}"
                                          {% comment %} onchange="checkboxHandle('sub_{{ sub.id  }}', '{{ sub.id }}', '{{ sub.text }}', event, 'sub')" {% endcomment %}
                                         data-is-sub="true" data-parent-id="{{ item.id }}" >
                                   <label for="sub_{{ sub.id }}">: {{ sub.text }}</label>
                               </div>
+                            </div>
                           {% endfor %}
                       {% endif %}
                   {% endfor %}
 
                 </div>
               </div>
+            </div>
               <div id="template_details" style="display: none">
                 <!-- Details will be shown here -->
               </div>
               
-              <button onclick="confirmSelection()" type = "button">ยืนยัน</button>
+              <button onclick="confirmSelection()" type = "button" class="mx-4 mt-8 bg-green-500 hover:bg-green-700 text-white text-lg rounded-lg font-semibold w-auto py-2 px-4 flex justify-center">ยืนยัน</button>
             </div>
           </div>
         </div>
@@ -211,9 +232,11 @@
 
 
           <div class="flex justify-center p-4">
+
             <textarea id="message" rows="4"
               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
               placeholder="คำชี้แจง"></textarea>
+
           </div>
             <div class="w-auto" id ="test_select">
               <div id = 'test1'></div>
@@ -226,17 +249,21 @@
                 <!-- ฟิลด์แรกของแม่ -->
                 <div id="main_field0" class="main_field0">
                   <!-- div ลูก -->
+                 
                   <input type="text" name="main_field0" placeholder="หัวข้อหลัก" required
                     class="border border-gray-400 bg-gray-50 h-10 w-1/3 rounded-lg p-2" ></input>
                   <!-- ปุ่มเพิ่มลูก -->
                   <button type="button" class="addSubField" onclick="addSubField(this)">
 
-                    <div class="bg-blue-500 hover:bg-blue-700 text-white rounded-lg w-auto p-2 flex justify-center">
+                    <div class="bg-blue-500 hover:bg-blue-700 ml-3 text-white rounded-lg w-auto p-2 flex justify-center">
                       + เพิ่มหัวข้อย่อย
                     </div>
                   </button>
+                
+                
                   <div class="subFields"></div>
-
+                
+                
                 </div>
                 <div class="flex justify-between">
                   
@@ -257,16 +284,17 @@
             <button type="button" onclick="openPopup()"
                 class="bg-blue-500 text-white rounded-lg w-auto p-2 flex justify-center hover:bg-blue-700 mt-1 ml-2 mb-2">เลือกแม่แบบ PLO</button>
             <div id="Plo_div" class="Plo_div">
-      
+              
               <div class="Main_item"></div>
               <div class="subFields"></div>
+            
             </div>
 
           </div>
           <div class="flex justify-between">
-            <div></div>
+            <!-- <div></div> -->
             <button type="submit" name="action" value="create"
-              class="mx-4 mt-8 bg-green-500 hover:bg-green-700 text-white text-lg rounded-lg font-semibold w-auto py-2 px-4 flex justify-center">Create</button>
+              class="mx-4 mt-8 bg-green-500 hover:bg-green-700 text-white text-xl rounded-lg font-semibold w-auto py-3 px-5 flex justify-center">Create</button>
           </div>
       </div>
 

@@ -101,7 +101,7 @@
                     d="m1 1 4 4 4-4" />
                 </svg>
               </button>
-
+                
                   <div id="dropdownForm" class="absolute z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                     <ul class="py-2">
                         <li><a href="{% url 'form_detail' %}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">จัดการแบบประเมิน</a></li>
@@ -145,7 +145,7 @@
                 </div>
               </li>
               <li>
-                <a href="#"
+                <a href="{% url 'report_main' %}"
                   class="text-xl block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-500 md:p-0 ">รายงานการประเมิน</a>
               </li>
 
@@ -170,3 +170,27 @@
 </body>
 
 </html>
+
+{% block script %}
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const formButton = document.getElementById('formButton');
+    const dropdownForm = document.getElementById('dropdownForm');
+  
+    formButton.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dropdownForm.classList.toggle('hidden');
+    });
+  
+    // ซ่อน dropdown เมื่อคลิกที่อื่นในหน้าจอ
+    window.addEventListener('click', function(event) {
+        if (!event.target.matches('#formButton') && !event.target.closest('#dropdownForm')) {
+            if (!dropdownForm.classList.contains('hidden')) {
+              dropdownForm.classList.add('hidden');
+            }
+        }
+    });
+  });
+</script>
+  {% endblock %}

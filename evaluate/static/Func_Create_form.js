@@ -20,6 +20,7 @@
     subField.style.marginLeft="10px";
     subField.style.marginTop="5px";
     subField.style.height = "40px";
+    
     //subField.setAttribute("required", "true");
 
     var divName = button.parentNode.className;
@@ -36,6 +37,7 @@
     deleteButton.style.padding = "1px"
     deleteButton.style.width = "25px";
     deleteButton.style.margin = "2px";
+    
     deleteButton.onclick = function () {
       // ลบฟิลด์ลูกเมื่อคลิกปุ่มลบ
       subField.remove();
@@ -68,11 +70,11 @@
     mainField.className = "main_field" + dynamicFieldCounter;
     mainField.id = "main_field" + dynamicFieldCounter
     mainField.placeholder = "หัวข้อหลัก";
-    mainField.style.width = "33.333%";
+    mainField.style.width = "50%";
     mainField.style.border = "1px solid gray";
     mainField.style.height = "40px";
     mainField.style.backgroundColor = "rgb(249,250 ,251)";
-    mainField.style.marginTop = "8px";
+    mainField.style.marginTop = "15px";
     mainField.style.borderRadius = "0.5rem";
     mainField.style.paddingLeft = "4px";
     console.log(dynamicFieldCounter);

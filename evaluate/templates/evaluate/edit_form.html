@@ -161,11 +161,12 @@ body.blur-background {
   
           <div class="container" >  
             <div class="form_name" name="form_name"> 
-              <div class="border m-5 p-4 tracking-wider shadow-lg">
-                <div class="flex justify-between">
+              <div class="border m-5 p-4 tracking-wider shadow-lg bg-gray-100">
+                <div class="flex justify-between ">
                   <div></div>
+                  
                 <button type="button" onclick="togglePopup()" class="bg-blue-500 hover:bg-blue-700 mr-5 text-white p-4 rounded-lg">+ เพิ่มรายชื่อ</button></div>
-              {{ context.form_update.as_p }}
+                {{ context.form_update.as_p }}
             
             </div>
               
