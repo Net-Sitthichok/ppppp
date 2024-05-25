@@ -14,24 +14,16 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   
   {% block scripts %}
-<<<<<<< HEAD
+
   {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
-  {% comment %} <script src="{% static 'scripBar.js' %}"></script> {% endcomment %}
+   <!-- <script src="{% static 'scripBar.js' %}"></script>  -->
   <!-- <script src="{% static 'Func_Create_form.js' %}"></script> -->
   {% comment %} <script src="{% static 'popup.js' %}"></script> {% endcomment %}
-  <!-- <script src="{% static 'edit_form.js' %}"></script> -->
+  <script src="{% static 'manage_member.js' %}"></script>
   <!-- <script src="{% static 'show_pop.js' %}"></script> -->
   <script src="{% static 'add_Teacher.js' %}"></script> 
-=======
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="{% static 'scripBar.js' %}"></script>
-  <script src="{% static 'manage_member.js' %}"></script>
-  <script src="{% static 'popup.js' %}"></script>
-  <script src="{% static 'manage_profeser.js' %}"></script>
-  <script src="{% static 'add_Teacher.js' %}"></script>
-  <!-- <script src="{% static 'func_detailForm.js' %}"></script> -->
->>>>>>> 939e17b2bbd03866da52d05e81d799801c31fd5a
-  <!-- <script src="{% static "func_editForm.js"%}"></script> -->
+
+ 
   {% endblock %} 
 </head>
 
@@ -155,7 +147,7 @@
                 </div>
               </li>
               <li>
-                <a href="#"
+                <a href="{% url 'report_main' %}"
                   class="text-xl block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-500 md:p-0 ">รายงานการประเมิน</a>
               </li>
 
@@ -255,30 +247,30 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 }); 
 
-{% comment %} document.addEventListener('DOMContentLoaded', function() {
-document.querySelectorAll('.manage-teacher-button').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        const dropdownTeacher = this.nextElementSibling;
-        document.querySelectorAll('.dropdown-content').forEach(dd => {
-            if (dd !== dropdownTeacher) {
-                dd.classList.remove('show');
-            }
-        });
-        dropdownTeacher.classList.toggle('show');
-    });
-});
+// document.addEventListener('DOMContentLoaded', function() {
+// document.querySelectorAll('.manage-teacher-button').forEach(button => {
+//     button.addEventListener('click', function(event) {
+//         event.stopPropagation();
+//         const dropdownTeacher = this.nextElementSibling;
+//         document.querySelectorAll('.dropdown-content').forEach(dd => {
+//             if (dd !== dropdownTeacher) {
+//                 dd.classList.remove('show');
+//             }
+//         });
+//         dropdownTeacher.classList.toggle('show');
+//     });
+// });
 
-window.addEventListener('click', function() {
-    document.querySelectorAll('.dropdown-content').forEach(dd => {
-        dd.classList.remove('show');
-    });
-});
-});
+// window.addEventListener('click', function() {
+//     document.querySelectorAll('.dropdown-content').forEach(dd => {
+//         dd.classList.remove('show');
+//     });
+// });
+// });
 
-function openModal(modalId, userId, username, prefix, firstName, lastName, email) {
-document.getElementById(modalId).classList.remove('hidden');
-// Fill form fields with user data if needed
-} {% endcomment %}
+// function openModal(modalId, userId, username, prefix, firstName, lastName, email) {
+// document.getElementById(modalId).classList.remove('hidden');
+// // Fill form fields with user data if needed
+// } 
 </script>
 {% endblock %}
